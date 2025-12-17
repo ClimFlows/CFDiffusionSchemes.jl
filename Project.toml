@@ -1,7 +1,7 @@
 name = "CFDiffusionSchemes"
 uuid = "c98386de-3084-4a91-9df5-5a8c5033d229"
 authors = ["Thomas Dubos <thomas.dubos@polytechnique.edu> and contributors"]
-version = "1.0.0-DEV"
+version = "0.0.1"
 
 [compat]
 julia = "1.6.7"
