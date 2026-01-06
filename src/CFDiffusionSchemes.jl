@@ -1,5 +1,8 @@
 module CFDiffusionSchemes
 
-# Write your package code here.
+export HeatFluxScheme, HeatFluxConsistent, HeatFluxSimple
+export ViscosityScheme
 
-end
+include("julia/fine_grain.jl")
+
+end # module CFDiffusionSchemes
