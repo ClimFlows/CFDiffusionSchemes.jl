@@ -1,28 +1,37 @@
-""" 
-    HeatFluxScheme{F} 
-Abstract type for heat flux schemes.
 """
-abstract type HeatFluxScheme{F} end
+    ThermoFluxScheme{F}
+Abstract type for schemes of the diffusive fluxes of the thermodynamic tracers: the conservative variable (consvar)
+and the composition q.
+"""
+abstract type ThermoFluxScheme{F} end
 
 """
-    HeatFluxSimple{F} 
-Scheme with simple downgradient fluxes in consvar and q.
+    ThermoFluxDowngradient(; k_T, k_q)
+Downgradient fluxes of consvar and q: each is diffused down its own gradient, with diffusivity `k_T` for consvar
+and `k_q` for q [m² s⁻¹].
 """
-struct HeatFluxSimple{F} <: HeatFluxScheme{F}     
-    k_T::F
-    k_q::F
-end         
-HeatFluxSimple(; k_T, k_q) = HeatFluxSimple(k_T, k_q)
-
-"""
-    HeatFluxConsistent{F}
-Thermodynamically consistent fluxes in consvar and q.
-"""
-struct HeatFluxConsistent{F} <: HeatFluxScheme{F}
+struct ThermoFluxDowngradient{F} <: ThermoFluxScheme{F}
     k_T::F
     k_q::F
 end
-HeatFluxConsistent(; k_T, k_q) = HeatFluxConsistent(k_T, k_q)
+ThermoFluxDowngradient(; k_T, k_q) = ThermoFluxDowngradient(k_T, k_q)
+
+"""
+    ThermoFluxConsistent(; k_T, k_q)
+Thermodynamically consistent fluxes of consvar and q: a heat flux down the temperature gradient, with thermal
+diffusivity `k_T`, and a composition flux down the gradient of q corrected for barodiffusion, with diffusivity `k_q`
+[m² s⁻¹].
+"""
+struct ThermoFluxConsistent{F} <: ThermoFluxScheme{F}
+    k_T::F
+    k_q::F
+end
+ThermoFluxConsistent(; k_T, k_q) = ThermoFluxConsistent(k_T, k_q)
+
+# former names
+Base.@deprecate_binding HeatFluxScheme ThermoFluxScheme
+Base.@deprecate_binding HeatFluxSimple ThermoFluxDowngradient
+Base.@deprecate_binding HeatFluxConsistent ThermoFluxConsistent
 
 """
     ViscosityScheme{F} 

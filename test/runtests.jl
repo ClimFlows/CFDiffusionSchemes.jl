@@ -8,13 +8,18 @@ dyn_visc = 0.1
 bulk_visc = 0.2
 
 @testset "CFDiffusionSchemes.jl" begin
-    heatflux_simple = HeatFluxSimple(; k_T = k_T, k_q = k_q)
-    @test heatflux_simple.k_T == k_T
-    @test heatflux_simple.k_q == k_q
+    downgradient = ThermoFluxDowngradient(; k_T = k_T, k_q = k_q)
+    @test downgradient.k_T == k_T
+    @test downgradient.k_q == k_q
 
-    heatflux_consistent = HeatFluxConsistent(; k_T = k_T, k_q = k_q)
-    @test heatflux_consistent.k_T == k_T
-    @test heatflux_consistent.k_q == k_q
+    consistent = ThermoFluxConsistent(; k_T = k_T, k_q = k_q)
+    @test consistent.k_T == k_T
+    @test consistent.k_q == k_q
+
+    # former names still resolve
+    @test CFDiffusionSchemes.HeatFluxSimple === ThermoFluxDowngradient
+    @test CFDiffusionSchemes.HeatFluxConsistent === ThermoFluxConsistent
+    @test CFDiffusionSchemes.HeatFluxScheme === ThermoFluxScheme
 
     viscosity_scheme = ViscosityScheme(; dyn_visc = dyn_visc, bulk_visc = bulk_visc)
     @test viscosity_scheme.dyn_visc == dyn_visc

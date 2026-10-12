@@ -1,6 +1,6 @@
 module CFDiffusionSchemes
 
-export HeatFluxScheme, HeatFluxConsistent, HeatFluxSimple
+export ThermoFluxScheme, ThermoFluxConsistent, ThermoFluxDowngradient
 export ViscosityScheme
 
 include("julia/fine_grain.jl")
