@@ -5,7 +5,6 @@ using Test
 k_T = 0.01
 k_q = 0.005
 dyn_visc = 0.1
-bulk_visc = 0.2
 
 @testset "CFDiffusionSchemes.jl" begin
     downgradient = ThermoFluxDowngradient(; k_T = k_T, k_q = k_q)
@@ -21,7 +20,6 @@ bulk_visc = 0.2
     @test CFDiffusionSchemes.HeatFluxConsistent === ThermoFluxConsistent
     @test CFDiffusionSchemes.HeatFluxScheme === ThermoFluxScheme
 
-    viscosity_scheme = ViscosityScheme(; dyn_visc = dyn_visc, bulk_visc = bulk_visc)
+    viscosity_scheme = ViscosityScheme(; dyn_visc = dyn_visc)
     @test viscosity_scheme.dyn_visc == dyn_visc
-    @test viscosity_scheme.bulk_visc == bulk_visc
 end

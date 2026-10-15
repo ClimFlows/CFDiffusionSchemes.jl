@@ -34,11 +34,11 @@ Base.@deprecate_binding HeatFluxSimple ThermoFluxDowngradient
 Base.@deprecate_binding HeatFluxConsistent ThermoFluxConsistent
 
 """
-    ViscosityScheme{F} 
-Viscosity scheme with dynamic and bulk viscosities.
+    ViscosityScheme(; dyn_visc)
+Newtonian viscosity with a constant dynamic viscosity μ = `dyn_visc` [Pa s] and the Stokes hypothesis (zero bulk
+viscosity): the stress is τ = 2μ (S - (∇·u) I / 3), with S the strain rate.
 """
-struct ViscosityScheme{F}     
+struct ViscosityScheme{F}
     dyn_visc::F
-    bulk_visc::F
-end         
-ViscosityScheme(; dyn_visc, bulk_visc) = ViscosityScheme(dyn_visc, bulk_visc)
+end
+ViscosityScheme(; dyn_visc) = ViscosityScheme(dyn_visc)
