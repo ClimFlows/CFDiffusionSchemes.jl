@@ -1,35 +1,38 @@
-""" 
-    HeatFluxScheme{F} 
-Abstract type for heat flux schemes.
 """
-abstract type HeatFluxScheme{F} end
+    ThermoFluxScheme{F}
+Abstract type for schemes of the diffusive fluxes of the thermodynamic tracers: the conservative variable (consvar)
+and the composition (q).
+"""
+abstract type ThermoFluxScheme{F} end
 
 """
-    HeatFluxSimple{F} 
-Scheme with simple downgradient fluxes in consvar and q.
+    ThermoFluxDowngradient(; k_T, k_q)
+Downgradient fluxes of consvar and q with diffusivities [m² s⁻¹] `k_T` for consvar and `k_q` for q.
 """
-struct HeatFluxSimple{F} <: HeatFluxScheme{F}     
-    k_T::F
-    k_q::F
-end         
-HeatFluxSimple(; k_T, k_q) = HeatFluxSimple(k_T, k_q)
-
-"""
-    HeatFluxConsistent{F}
-Thermodynamically consistent fluxes in consvar and q.
-"""
-struct HeatFluxConsistent{F} <: HeatFluxScheme{F}
+struct ThermoFluxDowngradient{F} <: ThermoFluxScheme{F}
     k_T::F
     k_q::F
 end
-HeatFluxConsistent(; k_T, k_q) = HeatFluxConsistent(k_T, k_q)
+ThermoFluxDowngradient(; k_T, k_q) = ThermoFluxDowngradient(k_T, k_q)
 
 """
-    ViscosityScheme{F} 
-Viscosity scheme with dynamic and bulk viscosities.
+    ThermoFluxConsistent(; k_T, k_q)
+Thermodynamically consistent fluxes of consvar and q
+    - heat flux down the temperature gradient, with thermal diffusivity `k_T`
+    - composition flux down the gradient of q, corrected for barodiffusion, with diffusivity `k_q`
 """
-struct ViscosityScheme{F}     
+struct ThermoFluxConsistent{F} <: ThermoFluxScheme{F}
+    k_T::F
+    k_q::F
+end
+ThermoFluxConsistent(; k_T, k_q) = ThermoFluxConsistent(k_T, k_q)
+
+"""
+    ViscosityScheme(; dyn_visc)
+Newtonian viscosity with a constant dynamic viscosity μ = `dyn_visc` [Pa s] and the Stokes hypothesis (zero bulk
+viscosity): the stress is τ = 2μ (S - (∇·u) I / 3), with S the strain rate and I the identity tensor.
+"""
+struct ViscosityScheme{F}
     dyn_visc::F
-    bulk_visc::F
-end         
-ViscosityScheme(; dyn_visc, bulk_visc) = ViscosityScheme(dyn_visc, bulk_visc)
+end
+ViscosityScheme(; dyn_visc) = ViscosityScheme(dyn_visc)
