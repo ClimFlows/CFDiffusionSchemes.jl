@@ -27,11 +27,6 @@ struct ThermoFluxConsistent{F} <: ThermoFluxScheme{F}
 end
 ThermoFluxConsistent(; k_T, k_q) = ThermoFluxConsistent(k_T, k_q)
 
-# former names
-Base.@deprecate_binding HeatFluxScheme ThermoFluxScheme
-Base.@deprecate_binding HeatFluxSimple ThermoFluxDowngradient
-Base.@deprecate_binding HeatFluxConsistent ThermoFluxConsistent
-
 """
     ViscosityScheme(; dyn_visc)
 Newtonian viscosity with a constant dynamic viscosity μ = `dyn_visc` [Pa s] and the Stokes hypothesis (zero bulk
