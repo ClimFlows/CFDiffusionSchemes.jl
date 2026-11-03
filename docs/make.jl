@@ -8,7 +8,7 @@ makedocs(;
     authors="Thomas Dubos <thomas.dubos@polytechnique.edu> and contributors",
     sitename="CFDiffusionSchemes.jl",
     format=Documenter.HTML(;
-        canonical="https://dubosipsl.github.io/CFDiffusionSchemes.jl",
+        canonical="https://ClimFlows.github.io/CFDiffusionSchemes.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -18,6 +18,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/dubosipsl/CFDiffusionSchemes.jl",
+    repo="github.com/ClimFlows/CFDiffusionSchemes.jl",
     devbranch="main",
 )
